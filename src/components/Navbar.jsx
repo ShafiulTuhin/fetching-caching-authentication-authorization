@@ -1,17 +1,26 @@
 "use client";
 import { authClient, useSession } from "@/lib/auth-client";
-import { Button, Link } from "@heroui/react";
+import { Button } from "@heroui/react";
+import Link from "next/link";
+
 import React from "react";
 
 const Navbar = () => {
-  const { data } = useSession();
+  const { data, isPending } = useSession();
   console.log(data);
   const user = data?.user;
-  console.log(user);
 
   const handleLogout = () => {
     authClient.signOut();
   };
+
+  // if (isPending) {
+  //   return (
+  //     <div className="flex justify-center">
+  //       <h2>Loading...</h2>
+  //     </div>
+  //   );
+  // }
   return (
     <>
       <nav className="sticky top-0 z-40 w-full border-b border-separator bg-background/70 backdrop-blur-lg">
@@ -28,6 +37,11 @@ const Navbar = () => {
             <li>
               <Link href="/models" className="no-underline font-bold">
                 Models
+              </Link>
+            </li>
+            <li>
+              <Link href="/posts" className="no-underline font-bold">
+                Posts
               </Link>
             </li>
           </ul>
