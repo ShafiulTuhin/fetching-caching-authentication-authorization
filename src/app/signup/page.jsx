@@ -25,7 +25,7 @@ const SignUpPage = () => {
         name,
         email,
         password,
-        // callbackURL: "/",
+        callbackURL: "/",
       },
       {
         onSuccess: () => {

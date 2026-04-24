@@ -1,4 +1,8 @@
 "use server";
+
+import { createPost } from "@/lib/posts";
+import { revalidatePath } from "next/cache";
+
 export const handlePostAction = async (formData) => {
   const item = formData.get("item");
   const price = formData.get("price");

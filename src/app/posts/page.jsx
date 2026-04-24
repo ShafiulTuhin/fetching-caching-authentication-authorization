@@ -1,5 +1,5 @@
 import { handlePostAction } from "@/actions/actions";
-import { createPost, getPosts } from "@/lib/posts";
+import { getPosts } from "@/lib/posts";
 import {
   Input,
   Label,
@@ -9,7 +9,7 @@ import {
   Modal,
   Button,
 } from "@heroui/react";
-import { revalidatePath } from "next/cache";
+
 import React from "react";
 
 const PostsPage = () => {

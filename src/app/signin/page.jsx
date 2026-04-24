@@ -2,7 +2,6 @@
 
 import {
   Button,
-  Description,
   FieldError,
   Form,
   Input,
@@ -11,7 +10,7 @@ import {
   TextField,
 } from "@heroui/react";
 import { Check, Eye, EyeSlash } from "@gravity-ui/icons";
-import { authClient, useSession } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth-client";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -27,16 +26,20 @@ const SignInPage = () => {
       email: userData.email,
       password: userData.password,
       rememberMe: true,
-      callbackURL: "/",
+      // callbackURL: "/",
     });
-
-    console.log(data, error);
 
     if (error) {
       toast.error(error.message);
     }
     if (data) {
-      toast.success("Sign in successfully");
+      toast.success(`${data?.user?.name} successfully logged in.`, {
+        position: "top-right",
+        autoClose: 2000,
+      });
+      setTimeout(() => {
+        window.location.href = "/";
+      }, 1500);
     }
   };
   return (
@@ -61,11 +64,9 @@ const SignInPage = () => {
         <FieldError />
       </TextField>
 
-      {/* <TextField
-        isRequired
-        minLength={8}
+      <TextField
+        className="w-full"
         name="password"
-        type="password"
         validate={(value) => {
           if (value.length < 8) {
             return "Password must be at least 8 characters";
@@ -80,32 +81,12 @@ const SignInPage = () => {
         }}
       >
         <Label>Password</Label>
-        <Input placeholder="Enter your password" name="password" />
-        <Description>
-          Must be at least 8 characters with 1 uppercase and 1 number
-        </Description>
-        <FieldError />
-      </TextField> */}
-      <TextField className="w-full" name="password">
-        <Label>Password</Label>
         <InputGroup>
           <InputGroup.Input
             className="w-full "
             type={isVisible ? "text" : "password"}
             name="password"
             placeholder="Enter password"
-            validate={(value) => {
-              if (value.length < 8) {
-                return "Password must be at least 8 characters";
-              }
-              if (!/[A-Z]/.test(value)) {
-                return "Password must contain at least one uppercase letter";
-              }
-              if (!/[0-9]/.test(value)) {
-                return "Password must contain at least one number";
-              }
-              return null;
-            }}
           />
           <InputGroup.Suffix className="pr-0">
             <Button
@@ -123,6 +104,7 @@ const SignInPage = () => {
             </Button>
           </InputGroup.Suffix>
         </InputGroup>
+        <FieldError />
       </TextField>
 
       <div className="flex gap-2">
